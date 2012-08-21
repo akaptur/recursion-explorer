@@ -1,0 +1,33 @@
+    example(range(10))
+        if len(array) == 0:
+        array.pop()
+        example(array)
+            if len(array) == 0:
+            array.pop()
+            example(array)
+                if len(array) == 0:
+                array.pop()
+                example(array)
+                    if len(array) == 0:
+                    array.pop()
+                    example(array)
+                        if len(array) == 0:
+                        array.pop()
+                        example(array)
+                            if len(array) == 0:
+                            array.pop()
+                            example(array)
+                                if len(array) == 0:
+                                array.pop()
+                                example(array)
+                                    if len(array) == 0:
+                                    array.pop()
+                                    example(array)
+                                        if len(array) == 0:
+                                        array.pop()
+                                        example(array)
+                                            if len(array) == 0:
+                                            array.pop()
+                                            example(array)
+                                                if len(array) == 0:
+                                                    return
