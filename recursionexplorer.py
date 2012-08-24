@@ -2,34 +2,33 @@ import sys
 import linecache
 import inspect
 
-def traceit(frame, event, arg):
-    global depth
-    global counter
-    global f
-    # print event, frame, arg
-    # print inspect.getframeinfo(frame)
-    # print '\n'
-    # for attr in [x for x in dir(frame) if not callable(getattr(frame, x))]:
-    #     print attr, getattr(frame, attr)
-    # for func in [x for x in dir(frame) if callable(getattr(frame, x))]:
-    #     code = 'frame.' + func
-    #     print func, eval(code) # note we are not actually calling the function
-    # print '\n'
-    if event == 'line':
-        linenum = frame.f_lineno
-        linetext = linecache.getline('recursionexplorer.py', linenum)
-        f.write('    '*depth+linetext)
-        print 'line', linenum, linetext
-    if event == 'call':
-        print inspect.getframeinfo(frame)
-        _, _, function, _, _ = inspect.getframeinfo(frame)
-        if function == 'example':
-            depth += 1 
-    print "Function calls: ", depth
-    counter += 1
+class Tracer(object):
 
+    def __init__(self, file_out, function, program):
+        self.depth = 0
+        self.counter = 0
+        self.function = function
+        self.file_out = file_out
+        self.program = program
 
-    return traceit
+    def traceit(self, frame, event, arg):
+        # print event, frame, arg
+        # print inspect.getframeinfo(frame)
+        # print '\n'
+        if event == 'line':
+            linenum = frame.f_lineno
+            linetext = linecache.getline(self.program, linenum)
+            self.file_out.write('    '*self.depth+linetext)
+            print 'line', linenum, linetext
+        if event == 'call':
+            # print inspect.getframeinfo(frame)
+            _, _, currentfunc, _, _ = inspect.getframeinfo(frame)
+            if currentfunc == self.function:
+                self.depth += 1 
+        # print "Function calls: ", depth
+        self.counter += 1
+
+        return self.traceit
 
 
 def example(array):
@@ -38,19 +37,19 @@ def example(array):
     array.pop()
     example(array)
 
+def trace_setup(filename, function, program):
+    file_out = open(filename, 'w')
+    
+    trace_obj = Tracer(file_out, function, program)
+    
+    sys.settrace(trace_obj.traceit)
 
+if __name__ == '__main__':
+    program_name = __file__
 
-def main():
+    trace_setup('example_function.txt', 'example', program_name)
+    
     example(range(10))
 
 
-sys.settrace(traceit)
-depth = 0
-counter = 0 
-
-if __name__ == '__main__':
-    f = open('example_function.txt', 'w')
-    main()
-    print "Trace function executed %s times" %(counter)
-    f.close()
 
