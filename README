@@ -1,3 +1,7 @@
 This program is intended to be used as a learning tool for programmers practicing recursion.
 
-Given a recursive function, the program will show the path taken through the code.  Each line of code that executes is written into the output file.  Lines that do not execute (e.g. the code blocks below conditionals that evaluate to false) are not shown.  The code gets indented every time the function is called (i.e. every time the program steps deeper into the recursion).
+Given a recursive function, the program will show the path taken through the code.  
+Each line of code that executes is written into the output file.  Lines that do not 
+execute (e.g. the code blocks below conditionals that evaluate to false) are not shown. 
+The code gets indented every time the function is called (i.e. every time the program 
+steps deeper into the recursion).
