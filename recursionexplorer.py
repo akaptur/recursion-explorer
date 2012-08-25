@@ -22,7 +22,7 @@ class Tracer(object):
             print 'line', linenum, linetext
         if event == 'call':
             # print inspect.getframeinfo(frame)
-            _, _, currentfunc, _, _ = inspect.getframeinfo(frame)
+            currentfunc = inspect.getframeinfo(frame)[2]
             if currentfunc == self.function:
                 self.depth += 1 
         # print "Function calls: ", depth
